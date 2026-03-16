@@ -15,7 +15,7 @@ workflow BAM_PEAKS_CALL_QC_ANNOTATE_MACS3_HOMER {
     ch_bam                            // channel: [ val(meta), [ ip_bam ], [ control_bam ] ]
     ch_fasta                          // channel: [ fasta ]
     ch_gtf                            // channel: [ gtf ]
-    macs_gsize                        // integer: value for --macs_gsize parameter
+    ch_macs_gsize                     // channel: [ integer ]
     annotate_peaks_suffix             //  string: suffix for input HOMER annotate peaks files to be trimmed off
     ch_peak_count_header_multiqc      // channel: [ header_file ]
     ch_frip_score_multiqc             // channel: [ header_file ]
@@ -33,7 +33,7 @@ workflow BAM_PEAKS_CALL_QC_ANNOTATE_MACS3_HOMER {
     //
     MACS3_CALLPEAK (
         ch_bam,
-        macs_gsize
+        ch_macs_gsize
     )
     ch_versions = ch_versions.mix(MACS3_CALLPEAK.out.versions.first())
 

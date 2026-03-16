@@ -43,7 +43,7 @@ include { DEEPTOOLS_COMPUTEMATRIX       } from '../modules/nf-core/deeptools/com
 include { DEEPTOOLS_PLOTPROFILE         } from '../modules/nf-core/deeptools/plotprofile/main'
 include { DEEPTOOLS_PLOTHEATMAP         } from '../modules/nf-core/deeptools/plotheatmap/main'
 include { DEEPTOOLS_PLOTFINGERPRINT     } from '../modules/nf-core/deeptools/plotfingerprint/main'
-include { KHMER_UNIQUEKMERS             } from '../modules/nf-core/khmer/uniquekmers/main'
+//include { KHMER_UNIQUEKMERS             } from '../modules/nf-core/khmer/uniquekmers/main'
 
 //
 // SUBWORKFLOW: Consisting entirely of nf-core/modules
@@ -92,6 +92,7 @@ workflow CHIPSEQ {
     ch_samplesheet   // channel: path(sample_sheet.csv)
     ch_versions      // channel: [ path(versions.yml) ]
     ch_fasta         // channel: path(genome.fa)
+    ch_macs_gsize    // channel: path[ kmer ]
     ch_fai           // channel: path(genome.fai)
     ch_gtf           // channel: path(genome.gtf)
     ch_gene_bed      // channel: path(gene.beds)
@@ -421,19 +422,19 @@ workflow CHIPSEQ {
         ch_versions = ch_versions.mix(DEEPTOOLS_PLOTFINGERPRINT.out.versions.first())
     }
 
-    //
-    // MODULE: Calculute genome size with khmer
-    //
-    ch_macs_gsize                     = Channel.empty()
-    ch_subreadfeaturecounts_multiqc   = Channel.empty()
-    ch_macs_gsize = params.macs_gsize
-    if (!params.macs_gsize) {
-        KHMER_UNIQUEKMERS (
-            ch_fasta,
-            params.read_length
-        )
-        ch_macs_gsize = KHMER_UNIQUEKMERS.out.kmers.map { it.text.trim() }
-    }
+    // //
+    // // MODULE: Calculute genome size with khmer
+    // //
+    // ch_macs_gsize                     = Channel.empty()
+    // ch_subreadfeaturecounts_multiqc   = Channel.empty()
+    // ch_macs_gsize = params.macs_gsize
+    // if (!params.macs_gsize) {
+    //     KHMER_UNIQUEKMERS (
+    //         ch_fasta,
+    //         params.read_length
+    //     )
+    //     ch_macs_gsize = KHMER_UNIQUEKMERS.out.kmers.map { it.text.trim() }
+    // }
 
     // Create channels: [ meta, ip_bam, control_bam ]
     ch_ip_control_bam_bai

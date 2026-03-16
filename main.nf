@@ -65,6 +65,7 @@ workflow NFCORE_CHIPSEQ {
         params.bowtie2_index,
         params.chromap_index,
         params.star_index,
+        params.macs_gsize
     )
     ch_versions = ch_versions.mix(PREPARE_GENOME.out.versions)
 
@@ -85,7 +86,8 @@ workflow NFCORE_CHIPSEQ {
         PREPARE_GENOME.out.bwa_index,
         PREPARE_GENOME.out.bowtie2_index,
         PREPARE_GENOME.out.chromap_index,
-        PREPARE_GENOME.out.star_index
+        PREPARE_GENOME.out.star_index,
+        PREPARE_GENOME.out.macs_gsize
     )
 
     emit:
