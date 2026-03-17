@@ -42,7 +42,7 @@ workflow PREPARE_GENOME {
     bowtie2_index      //    file: /path/to/bowtie2/index/
     chromap_index      //    file: /path/to/chromap/index/
     star_index         //    file: /path/to/star/index/
-    macs_gsize         //    string: genome size for MACS3 (e.g. 2.7e9 or 2700000000)
+    macs_gsize         //    integer: genome size for MACS3 (e.g. 2.7e9 or 2700000000)
 
     main:
 
