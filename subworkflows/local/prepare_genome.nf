@@ -213,7 +213,7 @@ workflow PREPARE_GENOME {
             ch_versions   = ch_versions.mix(STAR_GENOMEGENERATE.out.versions)
         }
     }
-    
+
     // MODULE: Calculute genome size with khmer
     //
     ch_macs_gsize                     = Channel.empty()
